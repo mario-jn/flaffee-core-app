@@ -15,6 +15,13 @@
       "when": 1746064689567,
       "tag": "0001_nervous_ender_wiggin",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1746092046256,
+      "tag": "0002_plain_mathemanic",
+      "breakpoints": true
     }
   ]
 }

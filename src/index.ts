@@ -1,6 +1,6 @@
-import web from "./application/web";
-import config from "./application/config";
-import {logger} from "./application/logger";
+import web from './application/web';
+import config from './application/config';
+import { logger } from './application/logger';
 
 const port: number = config.port;
 

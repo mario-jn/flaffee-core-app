@@ -1,6 +1,6 @@
-import express, {Express} from "express"
-import {publicRouter} from "../route/publicApi";
-import {errorMiddleware} from "../middleware/errorMiddleware";
+import express, { Express } from 'express';
+import { publicRouter } from '../route/publicApi';
+import { errorMiddleware } from '../middleware/errorMiddleware';
 
 const web: Express = express();
 

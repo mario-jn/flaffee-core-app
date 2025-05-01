@@ -1,20 +1,19 @@
-import {integer, pgTable, timestamp, varchar} from "drizzle-orm/pg-core";
-import {relations} from "drizzle-orm";
-import {role} from "./role";
-import {order} from "./order";
+import { integer, pgTable, varchar } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
+import { role } from './role';
+import { order } from './order';
+import { timestamps } from './timestamp';
 
-export const employee = pgTable("employee", {
-    id: varchar("id", {length: 16}).primaryKey(),
-    name: varchar("name", {length: 255}).notNull(),
-    email: varchar("email", {length: 255}).notNull().unique(),
-    password: varchar("password", {length: 255}).notNull(),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at").defaultNow(),
-    deletedAt: timestamp("deleted_at").defaultNow(),
-    roleId: integer('role_id').references(()=>role.id),
+export const employee = pgTable('employee', {
+    id: varchar({ length: 16 }).primaryKey(),
+    name: varchar({ length: 255 }).notNull(),
+    email: varchar({ length: 255 }).notNull().unique(),
+    password: varchar({ length: 255 }).notNull(),
+    ...timestamps,
+    roleId: integer().references(() => role.id),
 });
 
 export const employeeRelations = relations(employee, ({ one, many }) => ({
-    role: one(role, { fields: [employee.roleId], references: [role.id]}),
+    role: one(role, { fields: [employee.roleId], references: [role.id] }),
     order: many(order),
 }));

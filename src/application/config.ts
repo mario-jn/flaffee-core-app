@@ -1,23 +1,23 @@
 import "dotenv/config"
-
-interface Config {
-    port: number;
-    nodeEnv: string;
-    databaseHost: string;
-    databasePort: number;
-    databaseName: string;
-    databaseUser: string;
-    databasePassword: string;
-}
+import {Config} from "../interface/config/config"
 
 const config: Config = {
     port: Number(process.env.PORT) | 3000,
-    nodeEnv: process.env.NODE_ENV || "dev",
-    databaseHost: process.env.DATABASE_HOST || "localhost",
-    databasePort: Number(process.env.DATABASE_PORT) || 5432,
-    databaseName: process.env.DATABASE_NAME!,
-    databaseUser: process.env.DATABASE_USER!,
-    databasePassword: process.env.DATABASE_PASSWORD!,
+    env: process.env.NODE_ENV || "development",
+    database: {
+        host: process.env.DATABASE_HOST || "localhost",
+        port: Number(process.env.DATABASE_PORT) || 5432,
+        name: process.env.DATABASE_NAME || "root",
+        user: process.env.DATABASE_USER || "user",
+        password: process.env.DATABASE_PASSWORD || "password",
+    },
+    log: {
+        filename: process.env.LOG_FILENAME || "app-%DATE%.log",
+        dirname: process.env.LOG_DIRNAME || "logs",
+        datePattern: process.env.LOG_DATEPATTERN || "YYYY-MM-DD",
+        maxSize: process.env.LOG_MAXSIZE || "10m",
+        maxFiles: process.env.LOG_MAXFILES || "7d",
+    },
 };
 
 export default config;

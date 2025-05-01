@@ -1,7 +1,9 @@
 import web from "./application/web";
 import config from "./application/config";
-const port = config.port;
+import {logger} from "./application/logger";
+
+const port: number = config.port;
 
 web.listen(port, () => {
-    console.log(`App started on port ${port}`);
-})
+    logger.info(`App started on port ${port}`);
+});

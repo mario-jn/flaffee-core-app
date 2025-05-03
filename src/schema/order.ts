@@ -8,13 +8,13 @@ export const orderStatus = pgEnum('order_status', ['ongoing', 'done']);
 export const orderType = pgEnum('order_type', ['dine_in', 'takeaway']);
 
 export const order = pgTable('order', {
-    id: serial().primaryKey(),
+    id: serial('id').primaryKey(),
     status: orderStatus('status').notNull(),
     type: orderType('type').notNull(),
-    price: integer().notNull(),
-    customer: varchar().notNull(),
+    price: integer('price').notNull(),
+    customer: varchar('customer', {length: 64}).notNull(),
     ...timestamps,
-    cashier: varchar().references(() => employee.id),
+    cashier: varchar('cashier', {length: 32}).references(() => employee.id),
 });
 
 export const orderRelations = relations(order, ({ one, many }) => ({

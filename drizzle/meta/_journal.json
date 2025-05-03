@@ -22,6 +22,13 @@
       "when": 1746092046256,
       "tag": "0002_plain_mathemanic",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1746246166257,
+      "tag": "0003_nice_lethal_legion",
+      "breakpoints": true
     }
   ]
 }

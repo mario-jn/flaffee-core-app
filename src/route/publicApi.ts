@@ -8,3 +8,6 @@ publicRouter.get('/api/health', HealthController.checkHealth);
 publicRouter.get('/api/products', ProductController.getProduct);
 publicRouter.post('/api/products', ProductController.postProduct);
 publicRouter.put('/api/products/:productId', ProductController.putProduct);
+publicRouter.delete('/api/products/:productId', ProductController.deleteProduct);
+publicRouter.put('/api/products/:productId/items/:productItemId', ProductController.putProductItem);
+publicRouter.delete('/api/products/:productId/items/:productItemId', ProductController.deleteProductItem);

@@ -3,10 +3,14 @@ import {
     PostProductBody,
     PostProductVal,
     PostProductResponse,
-    PutProductParam,
+    ProductIdParam,
     PutProductBody,
     PutProductResponse,
     PutProductVal,
+    PutProductItemBody,
+    PutProductItemVal,
+    ProductItemIdParam,
+    PutProductItemResponse,
 } from '../model/productModel';
 import { ProductRepository } from '../repository/productRepository';
 
@@ -35,12 +39,34 @@ export class ProductService {
         return { id: response.id };
     }
 
-    static async putProduct(body: PutProductBody, param: PutProductParam): Promise<PutProductResponse> {
+    static async putProduct(body: PutProductBody, param: ProductIdParam): Promise<PutProductResponse> {
         // Validate request with zod
         const requestValidated = PutProductVal.parse(body);
         // Update table product
         const response = await ProductRepository.putProduct(requestValidated, param);
         // Response
         return { id: response.id };
+    }
+
+    static async deleteProduct(param: ProductIdParam) {
+        // Update table product
+        await ProductRepository.deleteProduct(param);
+    }
+
+    static async putProductItem(
+        body: PutProductItemBody,
+        param: ProductIdParam & ProductItemIdParam,
+    ): Promise<PutProductItemResponse> {
+        // Validate request with zod
+        const requestValidated = PutProductItemVal.parse(body);
+        // Update table productItem
+        const response = await ProductRepository.putProductItem(requestValidated, param);
+
+        return { id: response.id };
+    }
+
+    static async deleteProductitem(param: ProductIdParam & ProductItemIdParam) {
+        // Update table productItem
+        await ProductRepository.deleteProductItem(param);
     }
 }

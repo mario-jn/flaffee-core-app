@@ -38,9 +38,49 @@ export class ProductController {
             next(err);
         }
     }
-    // GET PRODUCT ID
-    // PUT PRODUCT
-    // DELETE PRODUCT
-    // PUT PRODUCTITEM
-    // DELETE PRODUCTITEM
+
+    static async deleteProduct(request: Request, response: Response, next: NextFunction) {
+        try {
+            const param = { productId: parseInt(request.params.productId) };
+            await ProductService.deleteProduct(param);
+
+            response.status(200).json({
+                data: 'Product deleted successfully',
+            });
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async putProductItem(request: Request, response: Response, next: NextFunction) {
+        try {
+            const param = {
+                productId: parseInt(request.params.productId),
+                productItemId: parseInt(request.params.productItemId),
+            };
+            const result = await ProductService.putProductItem(request.body, param);
+
+            response.status(200).json({
+                data: result,
+            });
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async deleteProductItem(request: Request, response: Response, next: NextFunction) {
+        try {
+            const param = {
+                productId: parseInt(request.params.productId),
+                productItemId: parseInt(request.params.productItemId),
+            };
+            await ProductService.deleteProductitem(param);
+
+            response.status(200).json({
+                data: 'Product Item deleted successfully',
+            });
+        } catch (err) {
+            next(err);
+        }
+    }
 }

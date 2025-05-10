@@ -1,4 +1,4 @@
-import { asc, eq, isNull } from 'drizzle-orm';
+import { and, asc, eq, isNull } from 'drizzle-orm';
 import { database } from '../application/database';
 import { product } from '../schema/product';
 import {
@@ -7,9 +7,12 @@ import {
     PostProductItemInput,
     PostProductItemOutput,
     PostProductOutput,
+    ProductIdParam,
+    ProductItemIdParam,
     PutProductInput,
+    PutProductItemInput,
+    PutProductItemOutput,
     PutProductOutput,
-    PutProductParam,
 } from '../model/productModel';
 import { productItem } from '../schema/productItem';
 
@@ -31,6 +34,7 @@ export class ProductRepository {
                         size: true,
                         price: true,
                     },
+                    where: isNull(productItem.deletedAt),
                 },
             },
             orderBy: [asc(product.id)],
@@ -51,9 +55,40 @@ export class ProductRepository {
         return result;
     }
 
-    static async putProduct(input: PutProductInput, filter: PutProductParam): Promise<PutProductOutput> {
+    static async putProduct(input: PutProductInput, filter: ProductIdParam): Promise<PutProductOutput> {
         const [result] = await database.update(product).set(input).where(eq(product.id, filter.productId)).returning();
 
         return result;
+    }
+
+    static async deleteProduct(filter: ProductIdParam) {
+        await database
+            .update(product)
+            .set({
+                deletedAt: new Date(),
+            })
+            .where(eq(product.id, filter.productId));
+    }
+
+    static async putProductItem(
+        input: PutProductItemInput,
+        filter: ProductIdParam & ProductItemIdParam,
+    ): Promise<PutProductItemOutput> {
+        const [result] = await database
+            .update(productItem)
+            .set(input)
+            .where(and(eq(productItem.productId, filter.productId), eq(productItem.id, filter.productItemId)))
+            .returning();
+
+        return result;
+    }
+
+    static async deleteProductItem(filter: ProductIdParam & ProductItemIdParam) {
+        await database
+            .update(productItem)
+            .set({
+                deletedAt: new Date(),
+            })
+            .where(and(eq(productItem.productId, filter.productId), eq(productItem.id, filter.productItemId)));
     }
 }

@@ -9,12 +9,18 @@ export const errorMiddleware = (error: Error, request: Request, response: Respon
     }
 
     if (error instanceof ZodError) {
+        const message = error.errors
+            .map((err) => {
+                const field = err.path.join('.');
+                return `[${field}] ${err.message}`;
+            })
+            .join('; ');
         response.status(400).json({
-            error: `Validation failed: ${JSON.stringify(error)}`,
+            error: `Validation failed: ${message}`,
         });
     } else if (error instanceof ResponseError) {
         response.status(error.statusCode).json({
-            error_message: error.message,
+            error: error.message,
         });
     } else {
         response.status(500).json({

@@ -22,6 +22,41 @@
       "when": 1746092046256,
       "tag": "0002_plain_mathemanic",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1746246166257,
+      "tag": "0003_nice_lethal_legion",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1747041807141,
+      "tag": "0004_special_blizzard",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1747043580404,
+      "tag": "0005_calm_piledriver",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1747045444973,
+      "tag": "0006_green_puff_adder",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1747048630215,
+      "tag": "0007_hot_abomination",
+      "breakpoints": true
     }
   ]
 }

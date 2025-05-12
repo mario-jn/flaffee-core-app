@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { ProductService } from '../service/productService';
+import { ProductService } from './product.service';
 
 export class ProductController {
     static async getProduct(request: Request, response: Response, next: NextFunction) {

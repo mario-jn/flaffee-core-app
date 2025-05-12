@@ -1,10 +1,10 @@
 import { InferInsertModel } from 'drizzle-orm';
-import { product } from '../schema/product';
-import { productItem } from '../schema/productItem';
+import { products } from '../schema/products';
+import { productItems } from '../schema/product-items';
 import { z } from 'zod';
 
 type GetProductOutput = PostProductInput & {
-    productItem: PostProductItemInput[];
+    productItems: PostProductItemInput[];
 };
 type GetProductResponse = GetProductOutput[];
 
@@ -17,16 +17,16 @@ const PostProductVal = z.object({
     name: z.string().max(25),
     type: z.enum(['beverage', 'food']),
     category: z.enum(['coffee', 'tea', 'snack', 'main_course']),
-    productItem: PostProductItemVal.array(),
+    productItems: PostProductItemVal.array(),
 });
 type PostProductBody = z.infer<typeof PostProductVal>;
-type PostProductInput = InferInsertModel<typeof product>;
+type PostProductInput = InferInsertModel<typeof products>;
 type PostProductOutput = PostProductInput;
-type PostProductItemInput = InferInsertModel<typeof productItem>;
+type PostProductItemInput = InferInsertModel<typeof productItems>;
 type PostProductItemOutput = PostProductItemInput;
 type PostProductResponse = Pick<PostProductInput, 'id'>;
 
-const PutProductVal = PostProductVal.omit({ productItem: true });
+const PutProductVal = PostProductVal.omit({ productItems: true });
 type PutProductBody = z.infer<typeof PutProductVal>;
 type ProductIdParam = {
     productId: number;

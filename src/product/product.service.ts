@@ -11,8 +11,8 @@ import {
     PutProductItemVal,
     ProductItemIdParam,
     PutProductItemResponse,
-} from '../model/productModel';
-import { ProductRepository } from '../repository/productRepository';
+} from './product.model';
+import { ProductRepository } from './product.repository';
 
 export class ProductService {
     static async getProduct(): Promise<GetProductResponse> {

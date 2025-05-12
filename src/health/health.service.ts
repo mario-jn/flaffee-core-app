@@ -1,10 +1,10 @@
-import { HealthCheckResult } from '../interface/health/healthCheckResult';
+import { HealthCheckResponse } from './health.model';
 import { database } from '../application/database';
 import { sql } from 'drizzle-orm';
 import { logger } from '../application/logger';
 
 export class HealthService {
-    static async checkHealth(): Promise<HealthCheckResult> {
+    static async checkHealth(): Promise<HealthCheckResponse> {
         const checks = {
             database: await this.checkDatabase(),
         };

@@ -1,7 +1,7 @@
 import 'dotenv/config';
-import { Config } from '../interface/config/config';
+import { ConfigModel } from '../model/configModel';
 
-const config: Config = {
+const config: ConfigModel = {
     port: Number(process.env.PORT) | 3000,
     env: process.env.NODE_ENV || 'development',
     database: {

@@ -5,9 +5,10 @@ import { timestamps } from './timestamp';
 import { userRoles } from './user-roles';
 
 export const roles = pgTable('roles', {
-    id: serial().primaryKey(),
-    name: varchar().notNull(),
-    ...timestamps,
+    id: serial('id').primaryKey(),
+    name: varchar('name', { length: 64 }).unique().notNull(),
+    createdAt: timestamps.createdAt,
+    updatedAt: timestamps.updatedAt,
 });
 
 export const roleRelations = relations(roles, ({ many }) => ({

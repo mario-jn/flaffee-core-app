@@ -1,4 +1,4 @@
-import { HealthService } from '../service/healthService';
+import { HealthService } from './health.service';
 import { Request, Response, NextFunction } from 'express';
 
 export class HealthController {
@@ -9,8 +9,8 @@ export class HealthController {
             response.status(statusCode).json({
                 data: healthCheckResult,
             });
-        } catch (err) {
-            next(err);
+        } catch (error) {
+            next(error);
         }
     }
 }

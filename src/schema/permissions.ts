@@ -10,7 +10,8 @@ export const permissions = pgTable(
         id: serial('id').primaryKey(),
         action: varchar('action', { length: 128 }).notNull(),
         resourceId: integer('resource_id').references(() => resources.id),
-        ...timestamps,
+        createdAt: timestamps.createdAt,
+        updatedAt: timestamps.updatedAt,
     },
     (t) => [unique().on(t.action, t.resourceId)],
 );

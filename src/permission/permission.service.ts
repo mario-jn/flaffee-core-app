@@ -1,6 +1,6 @@
 import {CreatePermissionRequest, PermissionResponse} from './permission.model';
 import {PermissionRepository} from './permission.repository';
-import {ResponseError} from '../error/responseError';
+import {ResponseError} from '../error/response-error';
 import {ResourceRepository} from "../resource/resource.repository";
 import {PermissionValidation} from "./permission.validation";
 

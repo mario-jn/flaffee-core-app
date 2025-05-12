@@ -1,6 +1,6 @@
 import {CreateEmployeeRequest, CreateEmployeeSchema, Employee, EmployeeId} from "./employee.model";
 import {EmployeeRepository} from "./employee.repository";
-import {ResponseError} from "../error/responseError";
+import {ResponseError} from "../error/response-error";
 
 export class EmployeeService {
     constructor(private readonly employeeRepository: EmployeeRepository) {

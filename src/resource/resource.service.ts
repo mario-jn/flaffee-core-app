@@ -1,6 +1,6 @@
 import {CreateResourceRequest, ResourceResponse} from './resource.model';
 import {ResourceRepository} from './resource.repository';
-import {ResponseError} from '../error/responseError';
+import {ResponseError} from '../error/response-error';
 import {ResourceValidation} from "./resource.validation";
 
 export class ResourceService {

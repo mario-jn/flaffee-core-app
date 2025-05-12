@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { ConfigModel } from '../model/configModel';
+import {ConfigModel} from "./interface";
 
 const config: ConfigModel = {
     port: Number(process.env.PORT) | 3000,

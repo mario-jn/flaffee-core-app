@@ -1,6 +1,6 @@
 import {CreateEmployeeRequest, CreateEmployeeSchema, EmployeeId} from "../employee/employee.model";
 import {EmployeeRepository} from "../employee/employee.repository";
-import {ResponseError} from "../error/responseError";
+import {ResponseError} from "../error/response-error";
 import bcrypt from "bcrypt";
 
 export class AuthService {

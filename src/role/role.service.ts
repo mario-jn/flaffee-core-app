@@ -1,7 +1,7 @@
 import {CreateRoleRequest, RoleResponse} from "./role.model";
 import {RoleValidation} from "./role.validation";
 import {RoleRepository} from "./role.repository";
-import {ResponseError} from "../error/responseError";
+import {ResponseError} from "../error/response-error";
 
 export class RoleService {
     static async createRole(request: CreateRoleRequest): Promise<RoleResponse> {

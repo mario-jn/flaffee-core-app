@@ -6,15 +6,15 @@ import { permissions } from './permissions';
 export const rolePermissions = pgTable(
     'role_permissions',
     {
-        roleId: integer().references(() => roles.id),
-        permissionId: integer().references(() => permissions.id),
+        roleId: integer().notNull().references(() => roles.id),
+        permissionId: integer().notNull().references(() => permissions.id),
     },
     (t) => [primaryKey({ columns: [t.roleId, t.permissionId] })],
 );
 
 export const rolePermissionRelations = relations(rolePermissions, ({ one }) => ({
-    roles: one(roles, { fields: [rolePermissions.roleId], references: [roles.id] }),
-    permissions: one(permissions, {
+    role: one(roles, { fields: [rolePermissions.roleId], references: [roles.id] }),
+    permission: one(permissions, {
         fields: [rolePermissions.permissionId],
         references: [permissions.id],
     }),

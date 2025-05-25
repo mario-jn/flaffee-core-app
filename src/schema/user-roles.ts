@@ -6,13 +6,13 @@ import { relations } from 'drizzle-orm';
 export const userRoles = pgTable(
     'user_roles',
     {
-        userId: varchar('user_id', { length: 32 }).references(() => employees.id),
-        roleId: integer('role_id').references(() => roles.id),
+        userId: varchar('user_id', { length: 32 }).notNull().references(() => employees.id),
+        roleId: integer('role_id').notNull().references(() => roles.id),
     },
     (t) => [primaryKey({ columns: [t.userId, t.roleId] })],
 );
 
 export const userRoleRelations = relations(userRoles, ({ one }) => ({
-    users: one(employees, { fields: [userRoles.userId], references: [employees.id] }),
-    roles: one(roles, { fields: [userRoles.roleId], references: [roles.id] }),
+    user: one(employees, { fields: [userRoles.userId], references: [employees.id] }),
+    role: one(roles, { fields: [userRoles.roleId], references: [roles.id] }),
 }));

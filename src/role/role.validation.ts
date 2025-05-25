@@ -8,4 +8,6 @@ export class RoleValidation {
     static readonly ASSIGN_PERMISSIONS = z.object({
        permissionIds: z.number().nonnegative().array(),
     });
+
+    static readonly REVOKE_PERMISSIONS = RoleValidation.ASSIGN_PERMISSIONS;
 }

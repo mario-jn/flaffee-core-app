@@ -25,11 +25,11 @@ export class ProductService {
         // Validate request with zod
         const requestValidated = PostProductVal.parse(body);
         // Split request into product and productItem
-        const { productItem, ...product } = requestValidated;
+        const { productItems, ...products } = requestValidated;
         // Insert product
-        const response = await ProductRepository.postProduct(product);
+        const response = await ProductRepository.postProduct(products);
         // Map productId to productItem
-        const productItemWithProductId = productItem.map((item) => ({
+        const productItemWithProductId = productItems.map((item) => ({
             productId: response.id,
             ...item,
         }));
@@ -37,6 +37,27 @@ export class ProductService {
         await ProductRepository.postProductItem(productItemWithProductId);
         // Response
         return { id: response.id };
+    }
+
+    static async postProductImage(file: Express.Multer.File, param: ProductIdParam): Promise<PostProductResponse> {
+        // Check productId
+        const check = await ProductRepository.getProductById(param);
+        if (!check) {
+            throw new ResponseError(404, 'Product not found', 'Produk tidak ditemukan');
+        }
+
+        // Validate file
+        if (!file) {
+            throw new ResponseError(400, 'File is required', 'File tidak boleh kosong');
+        }
+        const input = {
+            image: file.filename,
+        };
+
+        // Update table product
+        const result = await ProductRepository.postProductImage(input, param);
+
+        return result;
     }
 
     static async putProduct(body: PutProductBody, param: ProductIdParam): Promise<PutProductResponse> {

@@ -3,6 +3,8 @@ import { database } from '../application/database';
 import { products } from '../schema/products';
 import {
     GetProductOutput,
+    PostProductImageInput,
+    PostProductImageOutput,
     PostProductInput,
     PostProductItemInput,
     PostProductItemOutput,
@@ -25,6 +27,7 @@ export class ProductRepository {
                 name: true,
                 type: true,
                 category: true,
+                image: true,
             },
             with: {
                 productItems: {
@@ -55,8 +58,25 @@ export class ProductRepository {
         return result;
     }
 
+    static async postProductImage(
+        input: PostProductImageInput,
+        filter: ProductIdParam,
+    ): Promise<PostProductImageOutput> {
+        const [result] = await database
+            .update(products)
+            .set(input)
+            .where(eq(products.id, filter.productId))
+            .returning();
+
+        return result;
+    }
+
     static async putProduct(input: PutProductInput, filter: ProductIdParam): Promise<PutProductOutput> {
-        const [result] = await database.update(products).set(input).where(eq(products.id, filter.productId)).returning();
+        const [result] = await database
+            .update(products)
+            .set(input)
+            .where(eq(products.id, filter.productId))
+            .returning();
 
         return result;
     }

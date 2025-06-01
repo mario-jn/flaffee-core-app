@@ -1,3 +1,4 @@
+import { ResponseError } from '../error/response-error';
 import {
     GetProductResponse,
     PostProductBody,
@@ -61,6 +62,11 @@ export class ProductService {
     }
 
     static async putProduct(body: PutProductBody, param: ProductIdParam): Promise<PutProductResponse> {
+        // Check productId
+        const check = await ProductRepository.getProductById(param);
+        if (!check) {
+            throw new ResponseError(404, 'Product not found', 'Produk tidak ditemukan');
+        }
         // Validate request with zod
         const requestValidated = PutProductVal.parse(body);
         // Update table product
@@ -70,6 +76,11 @@ export class ProductService {
     }
 
     static async deleteProduct(param: ProductIdParam) {
+        // Check productId
+        const check = await ProductRepository.getProductById(param);
+        if (!check) {
+            throw new ResponseError(404, 'Product not found', 'Produk tidak ditemukan');
+        }
         // Update table product
         await ProductRepository.deleteProduct(param);
     }
@@ -78,6 +89,11 @@ export class ProductService {
         body: PutProductItemBody,
         param: ProductIdParam & ProductItemIdParam,
     ): Promise<PutProductItemResponse> {
+        // Check productId
+        const check = await ProductRepository.getProductById(param);
+        if (!check) {
+            throw new ResponseError(404, 'Product not found', 'Produk tidak ditemukan');
+        }
         // Validate request with zod
         const requestValidated = PutProductItemVal.parse(body);
         // Update table productItem
@@ -87,6 +103,11 @@ export class ProductService {
     }
 
     static async deleteProductitem(param: ProductIdParam & ProductItemIdParam) {
+        // Check productId
+        const check = await ProductRepository.getProductById(param);
+        if (!check) {
+            throw new ResponseError(404, 'Product not found', 'Produk tidak ditemukan');
+        }
         // Update table productItem
         await ProductRepository.deleteProductItem(param);
     }

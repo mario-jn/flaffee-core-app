@@ -52,6 +52,41 @@ export class ProductRepository {
         return result;
     }
 
+    static async getProductById(filter: Partial<ProductIdParam & ProductItemIdParam>): Promise<GetProductOutput> {
+        const whereProduct = [isNull(products.deletedAt)];
+
+        if (filter.productId) {
+            whereProduct.push(eq(products.id, filter.productId));
+        }
+
+        const [result] = await database.query.products.findMany({
+            where: and(...whereProduct),
+            columns: {
+                id: true,
+                name: true,
+                type: true,
+                category: true,
+                image: true,
+            },
+            with: {
+                productItems: {
+                    where: and(
+                        isNull(productItems.deletedAt),
+                        ...(filter.productItemId ? [eq(productItems.id, filter.productItemId)] : []),
+                    ),
+                    columns: {
+                        id: true,
+                        variant: true,
+                        size: true,
+                        price: true,
+                    },
+                },
+            },
+        });
+
+        return result;
+    }
+
     static async postProductItem(input: PostProductItemInput[]): Promise<PostProductItemOutput[]> {
         const result = await database.insert(productItems).values(input).returning();
 

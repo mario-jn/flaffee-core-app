@@ -1,5 +1,6 @@
 export interface ConfigModel {
     port: number;
+    imgPort: number;
     env: string;
     database: DatabaseConfig;
     log: LogConfig;

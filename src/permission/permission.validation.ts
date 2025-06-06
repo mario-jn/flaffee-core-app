@@ -5,4 +5,6 @@ export class PermissionValidation {
         action: z.string().max(128),
         resourceId: z.number(),
     });
+
+    static readonly DELETE = z.number().nonnegative();
 }

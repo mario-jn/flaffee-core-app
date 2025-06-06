@@ -1,15 +1,17 @@
-import { integer, pgTable, serial, unique, varchar } from 'drizzle-orm/pg-core';
+import {integer, pgEnum, pgTable, serial, unique, varchar} from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { rolePermissions } from './role-permissions';
 import { timestamps } from './timestamp';
 import { resources } from './resources';
 
+export const permissionActionEnum = pgEnum('permission_action', ['create', 'read', 'delete']);
+
 export const permissions = pgTable(
     'permissions',
     {
         id: serial('id').primaryKey(),
-        action: varchar('action', { length: 128 }).notNull(),
-        resourceId: integer('resource_id').references(() => resources.id),
+        action: permissionActionEnum('action').notNull(),
+        resourceId: integer('resource_id').notNull().references(() => resources.id),
         createdAt: timestamps.createdAt,
         updatedAt: timestamps.updatedAt,
     },
@@ -18,5 +20,5 @@ export const permissions = pgTable(
 
 export const permissionRelations = relations(permissions, ({ one, many }) => ({
     rolePermissions: many(rolePermissions),
-    resources: one(resources, { fields: [permissions.resourceId], references: [resources.id] }),
+    resource: one(resources, { fields: [permissions.resourceId], references: [resources.id] }),
 }));

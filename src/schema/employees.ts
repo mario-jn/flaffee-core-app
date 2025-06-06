@@ -4,6 +4,7 @@ import { roles } from './roles';
 import { orders } from './orders';
 import { timestamps } from './timestamp';
 import { auditTrails } from './audit-trails';
+import {userRoles} from "./user-roles";
 
 export const employees = pgTable('employees', {
     id: varchar({ length: 32 }).primaryKey(),
@@ -14,7 +15,7 @@ export const employees = pgTable('employees', {
 });
 
 export const employeeRelations = relations(employees, ({ many }) => ({
-    roles: many(roles),
+    userRoles: many(userRoles),
     orders: many(orders),
     auditTrails: many(auditTrails),
 }));

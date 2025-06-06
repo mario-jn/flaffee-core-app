@@ -5,7 +5,7 @@ import {timestamps} from "./timestamp";
 
 export const resources = pgTable('resources', {
     id: serial('id').primaryKey(),
-    name: varchar('name', { length: 128 }),
+    name: varchar('name', { length: 128 }).notNull().unique(),
     description: varchar('description'),
     createdAt: timestamps.createdAt,
     updatedAt: timestamps.updatedAt,

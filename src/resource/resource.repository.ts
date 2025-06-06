@@ -1,25 +1,25 @@
 import { InsertResource, SelectResource } from './resource.model';
-import {database, DrizzleDatabase, TransactionScope} from '../application/database';
+import { database } from '../application/database';
 import { resources } from '../schema/resources';
-import { eq, sql } from 'drizzle-orm';
+import { count, eq, sql } from 'drizzle-orm';
 
 export class ResourceRepository {
-    static async create(resource: InsertResource, db: DrizzleDatabase | TransactionScope = database): Promise<SelectResource> {
-        const [createdResource] = await db
+    static async create(resource: InsertResource): Promise<SelectResource> {
+        const [createdResource] = await database
             .insert(resources)
             .values(resource)
             .returning();
         return createdResource;
     }
 
-    static async findAll(db: DrizzleDatabase | TransactionScope = database): Promise<SelectResource[]> {
-        return db
+    static async findAll(): Promise<SelectResource[]> {
+        return database
             .select()
             .from(resources);
     }
 
-    static async existsById(id: number, db: DrizzleDatabase | TransactionScope = database): Promise<boolean> {
-        const [result] = await db
+    static async existsById(id: number): Promise<boolean> {
+        const [result] = await database
             .select({ exists: sql<number>`1` })
             .from(resources)
             .where(eq(resources.id, id))
@@ -27,8 +27,8 @@ export class ResourceRepository {
         return result.exists === 1;
     }
 
-    static async existsByName(name: string, db: DrizzleDatabase | TransactionScope = database): Promise<boolean> {
-        const [result] = await db
+    static async existsByName(name: string): Promise<boolean> {
+        const [result] = await database
             .select({ exists: sql<number>`1` })
             .from(resources)
             .where(eq(resources.name, name))
@@ -36,8 +36,8 @@ export class ResourceRepository {
         return result.exists === 1;
     }
 
-    static async deleteById(id: number, db: DrizzleDatabase | TransactionScope = database): Promise<SelectResource> {
-        const [deletedResource] = await db
+    static async deleteById(id: number): Promise<SelectResource> {
+        const [deletedResource] = await database
             .delete(resources)
             .where(eq(resources.id, id))
             .returning();

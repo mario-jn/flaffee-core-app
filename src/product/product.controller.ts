@@ -26,19 +26,6 @@ export class ProductController {
         }
     }
 
-    static async postProductImage(request: Request, response: Response, next: NextFunction) {
-        try {
-            const param = { productId: parseInt(request.params.productId) };
-            const result = await ProductService.postProductImage(request.file!, param);
-
-            response.status(200).json({
-                data: result,
-            });
-        } catch (err) {
-            next(err);
-        }
-    }
-
     static async putProduct(request: Request, response: Response, next: NextFunction) {
         try {
             const param = { productId: parseInt(request.params.productId) };

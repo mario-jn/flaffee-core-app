@@ -1,11 +1,11 @@
-import {CreatePermissionRequest, CreatePermissionResponse, DeletePermissionResponse} from './permission.model';
+import {CreatePermissionRequest, PermissionResponse} from './permission.model';
 import {PermissionRepository} from './permission.repository';
 import {ResponseError} from '../error/response-error';
 import {ResourceRepository} from "../resource/resource.repository";
 import {PermissionValidation} from "./permission.validation";
 
 export class PermissionService {
-    static async createPermission(request: CreatePermissionRequest): Promise<CreatePermissionResponse> {
+    static async createPermission(request: CreatePermissionRequest): Promise<PermissionResponse> {
         const permission = PermissionValidation.CREATE.parse(request);
         const resourceExists = await ResourceRepository.existsById(permission.resourceId);
         if (resourceExists) {
@@ -18,8 +18,7 @@ export class PermissionService {
         return await PermissionRepository.create(permission);
     }
 
-    static async deletePermission(permissionId: number): Promise<DeletePermissionResponse> {
-        permissionId = PermissionValidation.DELETE.parse(permissionId);
+    static async deletePermission(permissionId: number): Promise<PermissionResponse> {
         const exists = await PermissionRepository.existsById(permissionId);
         if (exists) {
             throw new ResponseError(400, 'Permission is not exists', 'Permission tidak ada');

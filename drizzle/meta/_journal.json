@@ -57,13 +57,6 @@
       "when": 1747048630215,
       "tag": "0007_hot_abomination",
       "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "7",
-      "when": 1748184962012,
-      "tag": "0008_dry_hellcat",
-      "breakpoints": true
     }
   ]
 }

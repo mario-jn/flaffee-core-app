@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import {AssignPermissionsToRoleRequest, CreateRoleRequest, RevokePermissionsFromRoleRequest} from "./role.model";
+import {CreateRoleRequest} from "./role.model";
 import {RoleService} from "./role.service";
 
 export class RoleController {
@@ -41,36 +41,7 @@ export class RoleController {
     static async assignPermissions(request: Request, response: Response, next: NextFunction) {
         try{
             const roleId = parseInt(request.params.roleId, 10);
-            const assignPermissionsToRoleRequest : AssignPermissionsToRoleRequest = request.body as AssignPermissionsToRoleRequest;
-            const assignedRolePermissions = await RoleService.assignPermissions(roleId, assignPermissionsToRoleRequest);
-            response.status(200).json({
-                data: assignedRolePermissions
-            })
-        }catch(error){
-            next(error);
-        }
-    }
 
-    static async getPermissions(request: Request, response: Response, next: NextFunction) {
-        try{
-            const roleId = parseInt(request.params.roleId, 10);
-            const rolePermissions = await RoleService.getPermissions(roleId);
-            response.status(200).json({
-                data: rolePermissions
-            })
-        }catch(error){
-            next(error);
-        }
-    }
-
-    static async revokePermissions(request: Request, response: Response, next: NextFunction) {
-        try{
-            const roleId = parseInt(request.params.roleId, 10);
-            const revokePermissionsFromRoleRequest: RevokePermissionsFromRoleRequest = request.body as RevokePermissionsFromRoleRequest;
-            const revokedRolePermissions = await RoleService.revokePermissions(roleId, revokePermissionsFromRoleRequest);
-            response.status(200).json({
-                data: revokedRolePermissions
-            })
         }catch(error){
             next(error);
         }

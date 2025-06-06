@@ -6,14 +6,6 @@ import {PermissionValidation} from "./permission.validation";
 type SelectPermission = InferSelectModel<typeof permissions>;
 type InsertPermission = InferInsertModel<typeof permissions>;
 type CreatePermissionRequest = z.infer<typeof PermissionValidation.CREATE>;
-type PermissionId = Pick<SelectPermission, 'id'>;
-type CreatePermissionResponse = PermissionId;
-type DeletePermissionResponse = PermissionId;
+type PermissionResponse = Partial<SelectPermission>;
 
-export {
-    SelectPermission,
-    InsertPermission,
-    CreatePermissionRequest,
-    CreatePermissionResponse,
-    DeletePermissionResponse,
-};
+export { SelectPermission, InsertPermission, CreatePermissionRequest, PermissionResponse };

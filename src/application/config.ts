@@ -3,7 +3,6 @@ import {ConfigModel} from "./interface";
 
 const config: ConfigModel = {
     port: Number(process.env.PORT) | 3000,
-    imgPort: Number(process.env.IMG_PORT) || 3001,
     env: process.env.NODE_ENV || 'development',
     database: {
         host: process.env.DATABASE_HOST || 'localhost',

@@ -3,8 +3,6 @@ import { database } from '../application/database';
 import { products } from '../schema/products';
 import {
     GetProductOutput,
-    PostProductImageInput,
-    PostProductImageOutput,
     PostProductInput,
     PostProductItemInput,
     PostProductItemOutput,
@@ -27,7 +25,6 @@ export class ProductRepository {
                 name: true,
                 type: true,
                 category: true,
-                image: true,
             },
             with: {
                 productItems: {
@@ -52,66 +49,14 @@ export class ProductRepository {
         return result;
     }
 
-    static async getProductById(filter: Partial<ProductIdParam & ProductItemIdParam>): Promise<GetProductOutput> {
-        const whereProduct = [isNull(products.deletedAt)];
-
-        if (filter.productId) {
-            whereProduct.push(eq(products.id, filter.productId));
-        }
-
-        const [result] = await database.query.products.findMany({
-            where: and(...whereProduct),
-            columns: {
-                id: true,
-                name: true,
-                type: true,
-                category: true,
-                image: true,
-            },
-            with: {
-                productItems: {
-                    where: and(
-                        isNull(productItems.deletedAt),
-                        ...(filter.productItemId ? [eq(productItems.id, filter.productItemId)] : []),
-                    ),
-                    columns: {
-                        id: true,
-                        variant: true,
-                        size: true,
-                        price: true,
-                    },
-                },
-            },
-        });
-
-        return result;
-    }
-
     static async postProductItem(input: PostProductItemInput[]): Promise<PostProductItemOutput[]> {
         const result = await database.insert(productItems).values(input).returning();
 
         return result;
     }
 
-    static async postProductImage(
-        input: PostProductImageInput,
-        filter: ProductIdParam,
-    ): Promise<PostProductImageOutput> {
-        const [result] = await database
-            .update(products)
-            .set(input)
-            .where(eq(products.id, filter.productId))
-            .returning();
-
-        return result;
-    }
-
     static async putProduct(input: PutProductInput, filter: ProductIdParam): Promise<PutProductOutput> {
-        const [result] = await database
-            .update(products)
-            .set(input)
-            .where(eq(products.id, filter.productId))
-            .returning();
+        const [result] = await database.update(products).set(input).where(eq(products.id, filter.productId)).returning();
 
         return result;
     }

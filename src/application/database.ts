@@ -40,6 +40,3 @@ export const database = drizzle({
         },
     },
 });
-
-export type DrizzleDatabase = typeof database;
-export type TransactionScope = Parameters<Parameters<DrizzleDatabase['transaction']>[0]>[0];

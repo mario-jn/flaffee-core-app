@@ -16,7 +16,7 @@ const PostProductItemVal = z.object({
 const PostProductVal = z.object({
     name: z.string().max(25),
     type: z.enum(['beverage', 'food']),
-    category: z.enum(['coffee', 'non_coffee', 'snack', 'main_course']),
+    category: z.enum(['coffee', 'tea', 'snack', 'main_course']),
     productItems: PostProductItemVal.array(),
 });
 type PostProductBody = z.infer<typeof PostProductVal>;
@@ -25,11 +25,6 @@ type PostProductOutput = PostProductInput;
 type PostProductItemInput = InferInsertModel<typeof productItems>;
 type PostProductItemOutput = PostProductItemInput;
 type PostProductResponse = Pick<PostProductInput, 'id'>;
-
-type PostProductImageInput = {
-    image: string;
-};
-type PostProductImageOutput = PostProductOutput;
 
 const PutProductVal = PostProductVal.omit({ productItems: true });
 type PutProductBody = z.infer<typeof PutProductVal>;
@@ -60,8 +55,6 @@ export {
     PostProductItemInput,
     PostProductItemOutput,
     PostProductResponse,
-    PostProductImageInput,
-    PostProductImageOutput,
     ProductIdParam,
     ProductItemIdParam,
     PutProductBody,
